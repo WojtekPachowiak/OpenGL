@@ -5,18 +5,20 @@
 class Window
 {
 public:
-	static GLFWwindow* GetInstance() {
+	static Window* GetInstance() {
 		return s_Instance = (s_Instance != nullptr) ? s_Instance : new Window();
 	}
 
-	//void framebuffer_size_callback(GLFWwindow* window, int width, int height);
-	/*void mouse_callback(GLFWwindow* window, double xpos, double ypos);
-	void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
-	void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods);*/
+	static
+
 	void processInput(GLFWwindow* window);
-	GLFWwindow* Init();
+	bool Init();
+	inline GLFWwindow* GetWindow() { return m_window; }
+
 
 private:
 	Window() {}
-	static GLFWwindow* s_Instance;
+	GLFWwindow* m_window;
+	
+	static Window* s_Instance;
 };

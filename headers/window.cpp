@@ -1,9 +1,16 @@
 #include "window.h"
 #include "globals.h"
 #include "iostream"
+#include "Input.h"
+
+
 
 
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods) {
+    Input::SetKeyboard(key, action);
+
+    if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS) glfwSetWindowShouldClose(window, true);
+    /*
     if (key == GLFW_KEY_TAB && action == GLFW_PRESS) {
         if (!isFlyMode) {
             firstMouse = true;
@@ -12,7 +19,7 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
         else if (isFlyMode)
             glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
         isFlyMode = !isFlyMode;
-    }
+    }*/
 
 }
 
@@ -29,7 +36,9 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 
 void mouse_callback(GLFWwindow* window, double xpos, double ypos)
 {
-    if (!isFlyMode && !glfwGetKey(window, GLFW_MOUSE_BUTTON_1) == GLFW_PRESS) {
+    Input::SetMouse(xpos, ypos);
+
+    /*if (!isFlyMode && !glfwGetKey(window, GLFW_MOUSE_BUTTON_1) == GLFW_PRESS) {
         return;
     }
 
@@ -48,17 +57,22 @@ void mouse_callback(GLFWwindow* window, double xpos, double ypos)
         lastX = xpos;
         lastY = ypos;
     }
-    camera.ProcessMouseMovement(xoffset, yoffset, isFlyMode);
+    camera.ProcessMouseMovement(xoffset, yoffset, isFlyMode);*/
 }
 
 
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset) {
-    camera.ProcessMouseScroll(yoffset);
+    Input::SetScroll(xoffset, yoffset)
+
+    /*camera.ProcessMouseScroll(yoffset);*/
 }
 
 
 
-GLFWwindow* Window::Init(GLFWwindow* window) {
+bool Window::Init() {
+
+    GLFWwindow* window = Window::GetInstance()->m_window;
+
     // glfw: initialize and configure
    // ------------------------------
     glfwInit();
@@ -77,7 +91,7 @@ GLFWwindow* Window::Init(GLFWwindow* window) {
     {
         std::cout << "Failed to create GLFW window" << std::endl;
         glfwTerminate();
-        return nullptr;
+        return false;
     }
     glfwMakeContextCurrent(window);
     glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
@@ -90,11 +104,6 @@ GLFWwindow* Window::Init(GLFWwindow* window) {
     //glfwSetCursorPosCallback(window, cursor_position_callback);
     // GLEW: load all OpenGL function pointers
     // ---------------------------------------
-    if (GLEW_OK != glewInit())
-    {
-        std::cout << "Failed to initialize GLEW!" << std::endl;
-        return nullptr;
-    }
 
-    return window;
+    return true;
 }

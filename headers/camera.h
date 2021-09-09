@@ -44,6 +44,7 @@ public:
     //how is camera navigated
     CameraNavigation navigationMode;
 
+    bool isFlyMode = false;
 
     // constructor with vectors
     Camera(glm::vec3 position = glm::vec3(0.0f, 0.0f, 0.0f),

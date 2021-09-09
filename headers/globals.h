@@ -1,8 +1,8 @@
 #pragma once
+#include"glm/glm.hpp"
+
 
 namespace g {
-
-
 
 //const char* GetPath(const char* directory, std::string fileName);
 //constants
@@ -11,9 +11,7 @@ constexpr float PI = 3.14159274101257324219f;
 // settings
 const unsigned int SCR_WIDTH = 800;
 const unsigned int SCR_HEIGHT = 800;
-bool isFlyMode = false;
 glm::vec3 backgroundColor = glm::vec3(0.1f, 0.07f, 0.05f);
-
 
 
 //time

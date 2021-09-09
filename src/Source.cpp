@@ -39,6 +39,7 @@ Camera camera(glm::vec3(0.0f, 0.0f, 3.0f));
 
 #include "window.h"
 
+#include "glew.h"
 
 //TODO:
 //1. drawCube function
@@ -54,13 +55,12 @@ Camera camera(glm::vec3(0.0f, 0.0f, 3.0f));
 
 int main()
 {
-    int status = Window::Init();
-    GLFWwindow* window = nullptr;
-    window = Initialize_GLFW_GLEW(window);
-    if (window == nullptr) return -1;
-       
+
+    //bool status = Window::Init();
+    if (Window::GetInstance()->Init()) return -1;
+    if (GLEW::Init()) return -1;
     //setup imgui controller
-    ImGui_controller::Setup(Window::GetInstance());
+    ImGui_controller::Setup(Window::m_window);
 
     // tell stb_image.h to flip loaded texture's on the y-axis (before loading model).
     stbi_set_flip_vertically_on_load(true);
