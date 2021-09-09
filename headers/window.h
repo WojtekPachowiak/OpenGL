@@ -9,9 +9,6 @@ public:
 		return s_Instance = (s_Instance != nullptr) ? s_Instance : new Window();
 	}
 
-	static
-
-	void processInput(GLFWwindow* window);
 	bool Init();
 	inline GLFWwindow* GetWindow() { return m_window; }
 

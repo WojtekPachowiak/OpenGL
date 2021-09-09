@@ -14,16 +14,7 @@ const unsigned int SCR_HEIGHT = 800;
 glm::vec3 backgroundColor = glm::vec3(0.1f, 0.07f, 0.05f);
 
 
-//time
-float Time::deltaTime = 0.0;
-float Time::lastFrame = 0.0;
 
-
-
-// camera
-float lastX = (float)SCR_WIDTH / 2.0;
-float lastY = (float)SCR_HEIGHT / 2.0;
-bool firstMouse = true;
 
 //texture paths
 const char* imagesPath = "res/images/";
@@ -33,6 +24,7 @@ const char* modelsPath = "res/models/";
 
 //shader paths
 const char* shadersPath = "res/shaders/";
+
 
 
 

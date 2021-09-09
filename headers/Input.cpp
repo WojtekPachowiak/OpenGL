@@ -1,6 +1,15 @@
 #include "Input.h"
 #include <bitset>
 #include "GLFW/glfw3.h"
+#include <map>
+
+
+enum class Key {
+    W, A, S, D,
+    TAB,
+    MOUSE1,
+    LSHIFT
+};
 
 //scroll
 double _xoffset, _yoffset;
@@ -11,28 +20,41 @@ int _key, _action;
 
 
 //input
-std::uint_fast8_t inputs{};
-constexpr std::uint_fast8_t key_a{ 1 << 0 }; // 0000 0001
-constexpr std::uint_fast8_t key_s{ 1 << 1 }; // 0000 0010
-constexpr std::uint_fast8_t key_d{ 1 << 2 }; // 0000 0100
-constexpr std::uint_fast8_t key_w{ 1 << 3 }; // 0000 1000
-constexpr std::uint_fast8_t key_lshift{ 1 << 4 }; // 0001 0000
+std::uint_fast64_t inputs{0};
+//std::map<Key, uint_fast64_t> keyboard;
+
+//constexpr std::uint_fast8_t key_a{ 1 << 0 }; // 0000 0001
+//constexpr std::uint_fast8_t key_s{ 1 << 1 }; // 0000 0010
+//constexpr std::uint_fast8_t key_d{ 1 << 2 }; // 0000 0100
+//constexpr std::uint_fast8_t key_w{ 1 << 3 }; // 0000 1000
+//constexpr std::uint_fast8_t key_lshift{ 1 << 4 }; // 0001 0000
+//constexpr std::uint_fast8_t key_tab{ 1 << 5 }; // 0001 0000
+//constexpr std::uint_fast8_t key_tab{ 1 << 6 }; // 0001 0000
+//constexpr std::uint_fast8_t key_mouse1{ 1 << 7 }; // 0001 0000
+
+
+
+bool Input::IsPressed(Key key)
+{
+    return key & inputs;
+}
 
 
 void Input::ProcessInput()
 {
     if (_action == GLFW_PRESS) {
-        if (_key == GLFW_KEY_LEFT_SHIFT) inputs |= key_lshift;
-        if (_key == GLFW_KEY_W) inputs |= key_w;
-        if (_key == GLFW_KEY_S) inputs |= key_s;
-        if (_key == GLFW_KEY_A) inputs |= key_a;
-        if (_key == GLFW_KEY_D) inputs |= key_d;
+        if (_key == GLFW_KEY_LEFT_SHIFT) inputs |= LSHIFT;
+        if (_key == GLFW_KEY_W) inputs |= W;
+        if (_key == GLFW_KEY_S) inputs |= S;
+        if (_key == GLFW_KEY_A) inputs |= A;
+        if (_key == GLFW_KEY_D) inputs |= D;
+        if (_key == GLFW_KEY_TAB) inputs |= TAB;
+        if (_key == GLFW_MOUSE_BUTTON_1) inputs |= MOUSE1;
     }
-    inputs &= 0;
 
-    
-
-    camera.ProcessKeyboardAndMove(inputs, Time::deltaTime);
+    /// <summary>
+    /// //
+    /// </summary>
 
     inputs &= 0;
 }

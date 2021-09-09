@@ -35,9 +35,21 @@
 //};
 
 namespace Input {
+    enum Key {
+        W,A,S,D,
+        TAB,
+        MOUSE1,
+        LSHIFT
+    };
+
 	void ProcessInput();
+    bool IsPressed(Key);
 	void SetKeyboard(int key, int action);
 	void SetScroll(double xoffset, double yoffset);
 	void SetMouse(double xpos, double ypos);
+}
+
+namespace Keys {
+    
 }
 #endif // !INPUT_H
