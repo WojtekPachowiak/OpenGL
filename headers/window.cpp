@@ -4,22 +4,37 @@
 #include "Input.h"
 
 
+//enum class WindowMode {
+//    GUI,
+//    IMMERSED
+//};
+
+using WindowMode = Window::WindowMode;
+
+GLFWwindow* window;
+WindowMode windowMode;
+
+
+void SwitchWindowMode() {
+    windowMode = (int)windowMode ? WindowMode::IMMERSED : WindowMode::GUI;
+}
+
+
+
+//// ---------------------------CALLBACKS-------------------------------////
 
 
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods) {
     if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS) glfwSetWindowShouldClose(window, true);
-    if (key == GLFW_KEY_TAB && action == GLFW_PRESS) glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
-
-
-
-
+    if (key == GLFW_KEY_TAB && action == GLFW_PRESS) {
+        glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+        SwitchWindowMode();
+    }
     Input::SetKeyboard(key, action);
 
 }
 
-
 // glfw: whenever the window size changed (by OS or user resize) this callback function executes
-// ---------------------------------------------------------------------------------------------
 void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 {
     // make sure the viewport matches the new window dimensions; note that width and 
@@ -39,10 +54,9 @@ void scroll_callback(GLFWwindow* window, double xoffset, double yoffset) {
 }
 
 
+//------------------------ PUBLIC
 
 bool Window::Init() {
-
-    GLFWwindow* window = Window::GetInstance()->m_window;
 
     // glfw: initialize and configure
    // ------------------------------
@@ -77,4 +91,21 @@ bool Window::Init() {
     // ---------------------------------------
 
     return true;
+}
+
+
+
+bool Window::ShouldWindowsClose()
+{
+    return glfwWindowShouldClose(window);
+}
+
+WindowMode Window::GetWindowMode()
+{
+    return windowMode;
+}
+
+GLFWwindow* Window::GetWindow()
+{
+    return window;
 }

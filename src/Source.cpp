@@ -22,14 +22,8 @@
 //time
 #include "time_m.h"
 
-
-
-//declarations and constants
-#include "declarations.h"
-
 //camera
 #include "camera.h"
-Camera camera(glm::vec3(0.0f, 0.0f, 3.0f));
 
 //model importing
 #include "model.h"
@@ -40,6 +34,7 @@ Camera camera(glm::vec3(0.0f, 0.0f, 3.0f));
 #include "window.h"
 
 #include "glew.h"
+#include <globals.h>
 
 //TODO:
 //1. drawCube function
@@ -55,12 +50,10 @@ Camera camera(glm::vec3(0.0f, 0.0f, 3.0f));
 
 int main()
 {
-
-    //bool status = Window::Init();
-    if (Window::GetInstance()->Init()) return -1;
+    if (Window::Init()) return -1;
     if (GLEW::Init()) return -1;
     //setup imgui controller
-    ImGui_controller::Setup(Window::m_window);
+    ImGui_controller::Setup(Window::GetWindow());
 
     // tell stb_image.h to flip loaded texture's on the y-axis (before loading model).
     stbi_set_flip_vertically_on_load(true);
@@ -82,20 +75,20 @@ int main()
     // draw in wireframe
     //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
+    Camera camera(glm::vec3(0.0f, 0.0f, 3.0f));
+
     //lights
-    PointLight pointLight;
-    SpotLight spotLight;
-    Material mat;
+    g::PointLight pointLight;
+    g::SpotLight spotLight;
+    g::Material mat;
 
 
     // render loop
-    while (!glfwWindowShouldClose(window)) // -------------------------------------------------------------------------------//
+    while (!Window::ShouldWindowsClose) // -------------------------------------------------------------------------------//
     {
         ImGui_controller::NewFrame();
         Time::DeltaTime();
         
-        // input
-        processInput(window);
 
         // render
         glClearColor(backgroundColor.r, backgroundColor.g, backgroundColor.b, 1.0f);

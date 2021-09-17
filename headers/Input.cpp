@@ -4,12 +4,8 @@
 #include <map>
 
 
-enum class Key {
-    W, A, S, D,
-    TAB,
-    MOUSE1,
-    LSHIFT
-};
+
+using namespace Input::Keys;
 
 //scroll
 double _xoffset, _yoffset;
@@ -20,7 +16,7 @@ int _key, _action;
 
 
 //input
-std::uint_fast64_t inputs{0};
+std::uint_fast64_t inputs{0x0};
 //std::map<Key, uint_fast64_t> keyboard;
 
 //constexpr std::uint_fast8_t key_a{ 1 << 0 }; // 0000 0001
@@ -33,7 +29,6 @@ std::uint_fast64_t inputs{0};
 //constexpr std::uint_fast8_t key_mouse1{ 1 << 7 }; // 0001 0000
 
 
-
 bool Input::IsPressed(Key key)
 {
     return key & inputs;
@@ -42,6 +37,7 @@ bool Input::IsPressed(Key key)
 
 void Input::ProcessInput()
 {
+    
     if (_action == GLFW_PRESS) {
         if (_key == GLFW_KEY_LEFT_SHIFT) inputs |= LSHIFT;
         if (_key == GLFW_KEY_W) inputs |= W;
@@ -51,11 +47,6 @@ void Input::ProcessInput()
         if (_key == GLFW_KEY_TAB) inputs |= TAB;
         if (_key == GLFW_MOUSE_BUTTON_1) inputs |= MOUSE1;
     }
-
-    /// <summary>
-    /// //
-    /// </summary>
-
     inputs &= 0;
 }
 

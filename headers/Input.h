@@ -35,15 +35,16 @@
 //};
 
 namespace Input {
-    enum Key {
-        W,A,S,D,
-        TAB,
-        MOUSE1,
-        LSHIFT
-    };
-
+    namespace Keys {
+        enum Key {
+            W, A, S, D,
+            TAB,
+            MOUSE1,
+            LSHIFT
+        };
+    }
 	void ProcessInput();
-    bool IsPressed(Key);
+    bool IsPressed(Keys::Key key);
 	void SetKeyboard(int key, int action);
 	void SetScroll(double xoffset, double yoffset);
 	void SetMouse(double xpos, double ypos);
